@@ -10,6 +10,14 @@ The strategy interface for `react-validation-mixin` is defined [here](https://ju
 
     <script src="dist/strategy.min.js" type="text/javascript"></script>
     
+### Node
+
+    npm install react-validatorjs-strategy
+
+Then in your JavaScript file:
+
+    var strategy = require('react-validatorjs-strategy')
+    
 ## Usage
 
 A working example containing the below can be found at <https://github.com/TheChech/react-tutorial>.
