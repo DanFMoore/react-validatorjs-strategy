@@ -2,11 +2,13 @@
 
 Strategy for using [validatorjs](https://github.com/skaterdav85/validatorjs) with [react-validation-mixin](https://github.com/jurassix/react-validation-mixin).
 
-The strategy interface for `react-validation-mixin` is defined [here](https://jurassix.gitbooks.io/docs-react-validation-mixin/content/overview/strategies.html) and that is what this library implements as an interface for `validatorjs`.
+The strategy interface for `react-validation-mixin` is defined [here](https://jurassix.gitbooks.io/docs-react-validation-mixin/content/overview/strategies.html) and that is what this library implements as an interface for  [validatorjs](https://github.com/skaterdav85/validatorjs).
  
 ## Installation
  
 ### Browser
+
+First follow the instructions to install [validatorjs](https://github.com/skaterdav85/validatorjs) (tested with version 2.0.2) and then download `dist/strategy.min.js` and include via a script tag:
 
     <script src="dist/strategy.min.js" type="text/javascript"></script>
     
@@ -17,6 +19,8 @@ The strategy interface for `react-validation-mixin` is defined [here](https://ju
 Then in your JavaScript file:
 
     var strategy = require('react-validatorjs-strategy')
+    
+This also works if you're using `webpack` or `browserify` to compile your React components.
     
 ## Usage
 
@@ -147,3 +151,7 @@ As an example in Express:
     });
     
 Using this method also activates all rules if `createInactiveSchema` was used.
+
+## Testing
+
+Simply clone the repository, run `npm install` and then run `npm test`. The tests are in `tests/strategySpec.js`.
