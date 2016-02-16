@@ -4,7 +4,7 @@
   "description": "Strategy for using validatorjs with react-validation-mixin",
   "main": "./src/strategy.js",
   "dependencies": {
-    "validatorjs": "2.0.2"
+    "validatorjs": "2.0.5"
   },
   "devDependencies": {
     "babel-core": "^6.4.5",

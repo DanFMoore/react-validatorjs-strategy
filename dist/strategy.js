@@ -215,10 +215,13 @@
 	    }(Error)
 	};
 	
-	// If in the browser, export as a global window variable. Otherwise, export as a module.
-	if (typeof window !== "undefined") {
+	// If in the browser, export as a global window variable.
+	if (typeof window !== "undefined" && typeof window.strategy === "undefined") {
 	    window.strategy = strategy;
-	} else {
+	}
+	
+	// If being loaded as a module
+	if (true) {
 	    module.exports = strategy;
 	}
 

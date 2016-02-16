@@ -148,7 +148,7 @@ var strategy = {
 };
 
 // If in the browser, export as a global window variable.
-if (typeof window !== "undefined" && typeof window.strategy !== "undefined") {
+if (typeof window !== "undefined" && typeof window.strategy === "undefined") {
     window.strategy = strategy;
 }
 
