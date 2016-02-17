@@ -14,6 +14,8 @@ First follow the instructions to install [validatorjs](https://github.com/skater
     
 ### Node
 
+Requires at least Node 4.0.0.
+
     npm install react-validatorjs-strategy
 
 Then in your JavaScript file:

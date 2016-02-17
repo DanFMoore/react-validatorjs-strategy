@@ -35,5 +35,8 @@
   "bugs": {
     "url": "https://github.com/TheChech/react-validatorjs-strategy/issues"
   },
-  "homepage": "https://github.com/TheChech/react-validatorjs-strategy#readme"
+  "homepage": "https://github.com/TheChech/react-validatorjs-strategy#readme",
+  "engines": {
+    "node": ">= 4.0.0"
+  }
 }
