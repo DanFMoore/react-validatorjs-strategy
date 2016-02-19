@@ -14,9 +14,12 @@
     "babel-preset-es2015": "^6.3.13",
     "jasmine-core": "^2.2.0",
     "jasmine-node": "*",
+    "onchange": "^2.0.0",
     "uglify-js": "^2.6.1"
   },
   "scripts": {
+    "start": "npm install && npm run build && npm run watch",
+    "watch": "onchange './src/strategy.js' -- npm run build",
     "test": "jasmine-node tests",
     "build": "npm run build:cjs && npm run build:umd",
     "build:cjs": "babel ./src/strategy.js --presets es2015 --plugins transform-es2015-modules-commonjs -o ./dist/strategy.js -v",
