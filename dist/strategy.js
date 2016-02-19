@@ -1,21 +1,27 @@
-/**
- * Validate using the validatorjs library as a strategy for react-validation-mixin
- *
- * @see https://github.com/skaterdav85/validatorjs
- * @see https://jurassix.gitbooks.io/docs-react-validation-mixin/content/overview/strategies.html
- */
-
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _validatorjs = require('validatorjs');
+
+var _validatorjs2 = _interopRequireDefault(_validatorjs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Validate using the validatorjs library as a strategy for react-validation-mixin
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @see https://github.com/skaterdav85/validatorjs
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @see https://jurassix.gitbooks.io/docs-react-validation-mixin/content/overview/strategies.html
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
-var Validator = require('validatorjs');
-
-var strategy = {
+exports.default = {
     /**
      * Used to create this.validatorTypes in a React component and to be passed to validate or validateServer
      *
@@ -87,7 +93,7 @@ var strategy = {
             rules = schema.rules;
         }
 
-        var validator = new Validator(data, rules, schema.messages);
+        var validator = new _validatorjs2.default(data, rules, schema.messages);
 
         // If a callback has been specified on the schema, call it to allow customisation of the validator
         if (typeof schema.callback === 'function') {
@@ -168,15 +174,5 @@ var strategy = {
         return _class;
     }(Error)
 };
-
-// If in the browser, export as a global window variable.
-if (typeof window !== "undefined" && typeof window.strategy === "undefined") {
-    window.strategy = strategy;
-}
-
-// If being loaded as a module
-if (typeof module !== "undefined") {
-    module.exports = strategy;
-}
 
 //# sourceMappingURL=strategy.js.map
