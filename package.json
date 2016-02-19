@@ -24,7 +24,8 @@
     "test": "jasmine-node tests",
     "webpack:dev": "webpack --dev",
     "webpack": "webpack",
-    "build:cjs": "babel ./src/strategy.js --presets es2015 --plugins transform-es2015-modules-commonjs -o ./dist/strategy-cjs.js -v",
+    "build": "npm run build:cjs",
+    "build:cjs": "babel ./src/strategy.js --presets es2015 --plugins transform-es2015-modules-commonjs -o ./dist/strategy.js -v",
     "build:umd": "babel ./src/strategy.js --presets es2015 --plugins transform-es2015-modules-umd -o ./dist/strategy-umd.js -v"
   },
   "repository": {
