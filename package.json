@@ -22,7 +22,7 @@
     "watch": "onchange './src/strategy.js' -- npm run build",
     "test": "jasmine-node tests",
     "build": "npm run build:cjs && npm run build:umd",
-    "build:cjs": "babel ./src/strategy.js --presets es2015 --plugins transform-es2015-modules-commonjs -o ./dist/strategy.js -v",
+    "build:cjs": "babel ./src/strategy.js --presets es2015 --plugins transform-es2015-modules-commonjs -o ./dist/strategy.js -s",
     "build:umd": "babel ./src/strategy.js --presets es2015 --plugins transform-es2015-modules-umd | uglifyjs -o ./dist/strategy.min.js  --"
   },
   "repository": {

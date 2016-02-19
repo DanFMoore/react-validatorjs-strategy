@@ -178,3 +178,5 @@ if (typeof window !== "undefined" && typeof window.strategy === "undefined") {
 if (typeof module !== "undefined") {
     module.exports = strategy;
 }
+
+//# sourceMappingURL=strategy.js.map
