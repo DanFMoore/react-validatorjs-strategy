@@ -1,6 +1,6 @@
 {
   "name": "react-validatorjs-strategy",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Strategy for using validatorjs with react-validation-mixin",
   "main": "./dist/strategy.js",
   "dependencies": {
