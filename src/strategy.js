@@ -5,9 +5,11 @@
  * @see https://jurassix.gitbooks.io/docs-react-validation-mixin/content/overview/strategies.html
  */
 
-import Validator from 'validatorjs';
+'use strict';
 
-export default {
+var Validator = require('validatorjs');
+
+module.exports = {
     /**
      * Used to create this.validatorTypes in a React component and to be passed to validate or validateServer
      *
@@ -16,11 +18,11 @@ export default {
      * @param {Function} callback if specified, called to allow customisation of validator
      * @returns {Object}
      */
-    createSchema(rules, messages, callback) {
+    createSchema: function (rules, messages, callback) {
         return {
-            rules,
-            messages,
-            callback
+            rules: rules,
+            messages: messages,
+            callback: callback
         };
     },
     /**
@@ -31,8 +33,8 @@ export default {
      * @param {Function} callback if specified, called to allow customisation of validator
      * @returns {Object}
      */
-    createInactiveSchema(rules, messages, callback) {
-        const schema = this.createSchema(rules, messages, callback);
+    createInactiveSchema: function (rules, messages, callback) {
+        var schema = this.createSchema(rules, messages, callback);
         schema.activeRules = [];
 
         return schema;
@@ -43,7 +45,7 @@ export default {
      * @param {Object} schema As created by createInactiveSchema
      * @param {Object} rule Name of the rule as a key in schema.rules
      */
-    activateRule(schema, rule) {
+    activateRule: function (schema, rule) {
         if (typeof schema.activeRules !== 'undefined' && schema.activeRules.indexOf(rule) === -1) {
             schema.activeRules.push(rule);
         }
@@ -56,8 +58,8 @@ export default {
      * @param {Boolean} forceActive Whether to force all rules to be active even if not activated
      * @returns {Validator}
      */
-    createValidator(data, schema, forceActive) {
-        let rules = {};
+    createValidator: function (data, schema, forceActive) {
+        var rules = {};
 
         // Only add active rules to the validator if an initially inactive schema has been created.
         if (typeof schema.activeRules !== 'undefined') {
@@ -66,8 +68,8 @@ export default {
                 schema.activeRules = Object.keys(schema.rules);
             }
 
-            for (let i in schema.activeRules) {
-                let ruleName = schema.activeRules[i];
+            for (var i in schema.activeRules) {
+                var ruleName = schema.activeRules[i];
 
                 rules[ruleName] = schema.rules[ruleName];
             }
@@ -75,7 +77,7 @@ export default {
             rules = schema.rules;
         }
 
-        const validator = new Validator(data, rules, schema.messages);
+        var validator = new Validator(data, rules, schema.messages);
 
         // If a callback has been specified on the schema, call it to allow customisation of the validator
         if (typeof schema.callback === 'function') {
@@ -92,12 +94,12 @@ export default {
      * @param {Object} options Contains name of element being validated and previous errors
      * @param {Function} callback Called and passed the errors after validation
      */
-    validate(data, schema, options, callback) {
+    validate: function (data, schema, options, callback) {
         // If the whole form has been submitted, then activate all rules
-        const forceActive = !options.key;
-        const validator = this.createValidator(data, schema, forceActive);
+        var forceActive = !options.key;
+        var validator = this.createValidator(data, schema, forceActive);
 
-        const getErrors = () => {
+        var getErrors = function () {
             // If a single element is being validated, just get those errors.
             // Otherwise get all of them.
             if (options.key) {
@@ -119,16 +121,17 @@ export default {
      * @param {Object} schema Contains rules and custom error messages
      * @returns {Promise}
      */
-    validateServer(data, schema) {
-        const validator = this.createValidator(data, schema, true);
+    validateServer: function (data, schema) {
+        var validator = this.createValidator(data, schema, true);
+        var Error = this.Error;
 
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             validator.checkAsync(
-                () => {
+                function () {
                     resolve();
                 },
-                () => {
-                    const e = new this.Error('A validation error occurred');
+                function () {
+                    var e = new Error('A validation error occurred');
                     e.errors = validator.errors.all();
 
                     reject(e);
@@ -137,10 +140,13 @@ export default {
         });
     },
     /**
-     * Extension of the built-in Error. Created by validateServer when validation fails.
+     * Error class. Created by validateServer when validation fails.
      * Exists so that middleware can check it with instanceof: if (err instanceof strategy.Error)
      *
      * @property {Object} errors Contains the error messages by field name.
      */
-    Error: class extends Error {}
+    Error: function (message) {
+        this.message = message;
+        this.errors = {};
+    }
 };

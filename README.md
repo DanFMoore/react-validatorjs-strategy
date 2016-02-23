@@ -127,7 +127,7 @@ Submitting the whole form (when `this.props.validate` is called) works the same 
     
 ### On the server (e.g. in Express)
 
-The validation can also be used isomorphically both in the browser in React components and on the server. This is done by creating the schema in the same way and then calling `validateServer` which returns a promise; the rejection of which can be handled by an error handler. Because the rejection returns a sub-type of `Error` it can be easily identified.
+The validation can also be used isomorphically both in the browser in React components and on the server. This is done by creating the schema in the same way and then calling `validateServer` which returns a promise; the rejection of which can be handled by an error handler. Because the rejection returns an instance of `strategy.Error` it can be easily identified.
  
 As an example in Express:
 
