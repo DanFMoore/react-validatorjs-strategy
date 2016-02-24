@@ -2,15 +2,13 @@
   "name": "react-validatorjs-strategy",
   "version": "0.1.8",
   "description": "Strategy for using validatorjs with react-validation-mixin",
-  "main": "./dist/strategy.js",
+  "main": "./lib/strategy.js",
   "dependencies": {
     "validatorjs": "2.0.5"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.5.2",
     "babel-plugin-transform-es2015-modules-umd": "^6.5.0",
-    "babel-preset-es2015": "^6.3.13",
     "jasmine-core": "^2.2.0",
     "jasmine-node": "*",
     "onchange": "^2.0.0",
@@ -18,11 +16,10 @@
   },
   "scripts": {
     "start": "npm install && npm run build && npm run watch",
-    "watch": "onchange './src/strategy.js' -- npm run build",
+    "watch": "onchange './lib/strategy.js' -- npm run build",
     "test": "jasmine-node tests",
-    "build": "npm run build:cjs && npm run build:umd",
-    "build:cjs": "babel ./src/strategy.js --plugins transform-es2015-modules-commonjs -o ./dist/strategy.js -s",
-    "build:umd": "babel ./src/strategy.js --plugins transform-es2015-modules-umd | uglifyjs -o ./dist/strategy.min.js  --"
+    "build": "npm run build:umd",
+    "build:umd": "babel ./lib/strategy.js --plugins transform-es2015-modules-umd | uglifyjs -o ./dist/strategy.min.js  --"
   },
   "repository": {
     "type": "git",

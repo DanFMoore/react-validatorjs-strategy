@@ -10,17 +10,25 @@ The strategy interface for `react-validation-mixin` is defined [here](https://ju
 
 First follow the instructions to install [validatorjs](https://github.com/skaterdav85/validatorjs) (tested with version 2.0.5) and then download `dist/strategy.min.js` and include via a script tag:
 
-    <script src="dist/strategy.min.js" type="text/javascript"></script>
-    
+```html
+<script src="dist/strategy.min.js" type="text/javascript"></script>
+```
+
 ### Node
 
 Requires at least Node 4.0.0.
 
-    npm install react-validatorjs-strategy
+On the command line type:
+
+```
+npm install react-validatorjs-strategy
+```
 
 Then in your JavaScript file:
 
-    var strategy = require('react-validatorjs-strategy')
+```javascript
+var strategy = require('react-validatorjs-strategy')
+```
     
 This also works if you're using `webpack` or `browserify` to compile your React components.
     
@@ -32,50 +40,58 @@ A working example containing the below can be found at <https://github.com/TheCh
 
 `react-validation-mixin` requires a component to be validated to have `this.validatorTypes` defined. To create this, call `strategy.createSchema` either in the constructor if you're using classes, or in a function which is run very early, such as `getInitialState`. This method takes one required parameter and two optional ones:
 
-    this.validatorTypes = strategy.createSchema(
-        // First parameter is a list of rules for each element name
-        {
-            name: 'required',
-            email: 'required|email',
-            age: 'min:18'
-        },
-        // Second parameter is optional and is a list of custom error messages for elements
-        {
-            "required.email": "Without an :attribute we can't reach you!"
-        }
-        // Third parameter is also optional; a callback that takes the validator instance created
-        // and can be used to call methods on it. This is run at the point of validation.
-        function (validator) {
-            validator.lang = 'ru';
-        }
-    );
+```javascript
+this.validatorTypes = strategy.createSchema(
+    // First parameter is a list of rules for each element name
+    {
+        name: 'required',
+        email: 'required|email',
+        age: 'min:18'
+    },
+    // Second parameter is optional and is a list of custom error messages for elements
+    {
+        "required.email": "Without an :attribute we can't reach you!"
+    }
+    // Third parameter is also optional; a callback that takes the validator instance created
+    // and can be used to call methods on it. This is run at the point of validation.
+    function (validator) {
+        validator.lang = 'ru';
+    }
+);
+```
     
 To call the validation on for example a form submission:
 
-    handleSubmit = function (e) {
-        e.preventDefault();
+```javascript
+handleSubmit = function (e) {
+    e.preventDefault();
 
-        this.props.validate(function (error) {
-            if (!error) {
-                // Submit the data
-            }
-        });
-    },
+    this.props.validate(function (error) {
+        if (!error) {
+            // Submit the data
+        }
+    });
+},
+```
     
 The use of this strategy makes no difference to how the validation is handled in the render method, but just for the sake of completeness, triggering the validation on blur and then rendering any validation messages under the element:
 
-    <input
-        name='name'
-        type='text'
-        placeholder='Your name'
-        onBlur={this.props.handleValidation('name')}
-    />
-    
-    {this.props.getValidationMessages('name')}
+```html
+<input
+    name='name'
+    type='text'
+    placeholder='Your name'
+    onBlur={this.props.handleValidation('name')}
+/>
+
+{this.props.getValidationMessages('name')}
+```
     
 Then after the component is defined:
 
-    Component = validation(strategy)(Component);
+```javascript
+Component = validation(strategy)(Component);
+```
     
 #### Validating onChange
 
@@ -85,43 +101,49 @@ To achieve this, there is another way of creating validation schemas; `createIna
 
 An example:
 
-    this.validatorTypes = strategy.createInactiveSchema(...);
+```javascript
+this.validatorTypes = strategy.createInactiveSchema(...);
+```
     
 Then the events bound to the element have to be changed slightly:
 
-    <input
-        type="text"
-        placeholder="Your name"
-        name="name"
-        value={this.state.name}
-        onBlur={this.activateValidation}
-        onChange={this.handleChange}
-    />
+```html
+<input
+    type="text"
+    placeholder="Your name"
+    name="name"
+    value={this.state.name}
+    onBlur={this.activateValidation}
+    onChange={this.handleChange}
+/>
+```
     
 These methods have to be created in the component:
 
-    /**
-     * Activate the validation rule for the element on blur
-     *
-     * @param {Event} e
-     */
-    activateValidation(e) {
-        strategy.activateRule(this.validatorTypes, e.target.name);
-        this.props.handleValidation(e.target.name)(e);
-    },
-    /**
-     * Set the state of the changed variable and then when set, call validator
-     *
-     * @param {Event} e
-     */
-    handleChange(e) {
-        var state = {};
-        state[e.target.name] = e.target.value;
+```javascript
+/**
+ * Activate the validation rule for the element on blur
+ *
+ * @param {Event} e
+ */
+activateValidation(e) {
+    strategy.activateRule(this.validatorTypes, e.target.name);
+    this.props.handleValidation(e.target.name)(e);
+},
+/**
+ * Set the state of the changed variable and then when set, call validator
+ *
+ * @param {Event} e
+ */
+handleChange(e) {
+    var state = {};
+    state[e.target.name] = e.target.value;
 
-        this.setState(state, () => {
-            this.props.handleValidation(e.target.name)(e);
-        });
-    },
+    this.setState(state, () => {
+        this.props.handleValidation(e.target.name)(e);
+    });
+},
+```
     
 Submitting the whole form (when `this.props.validate` is called) works the same way; it automatically activates all rules.
     
@@ -131,26 +153,28 @@ The validation can also be used isomorphically both in the browser in React comp
  
 As an example in Express:
 
-    app.post('/contact', function (req, res, next) {
-        var schema = strategy.createSchema(...);
-        
-        strategy.validateServer(req.body, schema).then(function () {
-            // Submit the data
-        })
-        .catch(next);
-    }
+```javascript
+app.post('/contact', function (req, res, next) {
+    var schema = strategy.createSchema(...);
     
-    /**
-     * If a validation error, output a 400 JSON response containing the error messages.
-     * Otherwise, use the default error handler.
-     */
-    app.use(function (err, req, res, next) {
-        if (err instanceof strategy.Error) {
-            res.status(400).json(err.errors);
-        } else {
-            next(err, req, res);
-        }
-    });
+    strategy.validateServer(req.body, schema).then(function () {
+        // Submit the data
+    })
+    .catch(next);
+}
+
+/**
+ * If a validation error, output a 400 JSON response containing the error messages.
+ * Otherwise, use the default error handler.
+ */
+app.use(function (err, req, res, next) {
+    if (err instanceof strategy.Error) {
+        res.status(400).json(err.errors);
+    } else {
+        next(err, req, res);
+    }
+});
+```
     
 Using this method also activates all rules if `createInactiveSchema` was used.
 

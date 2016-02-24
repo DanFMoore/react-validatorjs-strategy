@@ -2,7 +2,7 @@ var Validator = require('validatorjs');
 
 describe('strategy', function() {
     beforeEach(function () {
-        this.strategy = require('../dist/strategy');
+        this.strategy = require('../lib/strategy');
 
         this.rules = {
             name: 'required',
