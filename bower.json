@@ -1,0 +1,28 @@
+{
+  "name": "react-validatorjs-strategy",
+  "description": "Strategy for using validatorjs with react-validation-mixin",
+  "authors": [
+    "Dan Moore"
+  ],
+  "dependencies": {
+    "validatorjs": "2.0.5"
+  },
+  "license": "Unlicense",
+  "keywords": [
+    "react",
+    "validation",
+    "strategy"
+  ],
+  "homepage": "https://github.com/TheChech/react-validatorjs-strategy",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests"
+  ]
+}

@@ -14,6 +14,12 @@ First follow the instructions to install [validatorjs](https://github.com/skater
 <script src="dist/strategy.min.js" type="text/javascript"></script>
 ```
 
+Or you can install with bower:
+
+```
+bower install react-validatorjs-strategy
+```
+
 ### Node
 
 Requires at least Node 4.0.0.
