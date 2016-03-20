@@ -3,9 +3,9 @@
 Strategy for using [validatorjs](https://github.com/skaterdav85/validatorjs) with [react-validation-mixin](https://github.com/jurassix/react-validation-mixin).
 
 The strategy interface for `react-validation-mixin` is defined [here](https://jurassix.gitbooks.io/docs-react-validation-mixin/content/overview/strategies.html) and that is what this library implements as an interface for  [validatorjs](https://github.com/skaterdav85/validatorjs).
- 
+
 ## Installation
- 
+
 ### Browser
 
 First follow the instructions to install [validatorjs](https://github.com/skaterdav85/validatorjs) (tested with version 2.0.5) and then download `dist/strategy.min.js` and include via a script tag:
@@ -35,9 +35,9 @@ Then in your JavaScript file:
 ```javascript
 var strategy = require('react-validatorjs-strategy')
 ```
-    
+
 This also works if you're using `webpack` or `browserify` to compile your React components.
-    
+
 ## Usage
 
 A working example containing the below can be found at <https://github.com/TheChech/react-tutorial>.
@@ -65,7 +65,7 @@ this.validatorTypes = strategy.createSchema(
     }
 );
 ```
-    
+
 To call the validation on for example a form submission:
 
 ```javascript
@@ -79,7 +79,7 @@ handleSubmit = function (e) {
     });
 },
 ```
-    
+
 The use of this strategy makes no difference to how the validation is handled in the render method, but just for the sake of completeness, triggering the validation on blur and then rendering any validation messages under the element:
 
 ```html
@@ -92,13 +92,13 @@ The use of this strategy makes no difference to how the validation is handled in
 
 {this.props.getValidationMessages('name')}
 ```
-    
+
 Then after the component is defined:
 
 ```javascript
 Component = validation(strategy)(Component);
 ```
-    
+
 #### Validating onChange
 
 I prefer to validate on the change event of an input to get immediate feedback. However, this has a problem. If for example, you're validating for an email address, as soon as the user enters one character the field will be flagged up as invalid, even though they've not yet had a chance to enter valid data. What ideally should happen is that the field is not validated for the first time until it is blurred out and from then on, any change should be validated immediately.
@@ -110,7 +110,7 @@ An example:
 ```javascript
 this.validatorTypes = strategy.createInactiveSchema(...);
 ```
-    
+
 Then the events bound to the element have to be changed slightly:
 
 ```html
@@ -123,7 +123,7 @@ Then the events bound to the element have to be changed slightly:
     onChange={this.handleChange}
 />
 ```
-    
+
 These methods have to be created in the component:
 
 ```javascript
@@ -150,19 +150,39 @@ handleChange(e) {
     });
 },
 ```
-    
+
 Submitting the whole form (when `this.props.validate` is called) works the same way; it automatically activates all rules.
-    
+
+### Registering Custom Validation Rules
+
+You can access the Validator to [register custom validations](https://github.com/skaterdav85/validatorjs#registering-custom-validation-rules)
+through validator.constructor.
+
+```
+this.validatorTypes = strategy.createInactiveSchema({
+  username: 'required|usernameAvailable',
+}, {
+
+  }, function(validator) {
+  validator.constructor.registerAsync('usernameAvailable', function(username, attribute, req, passes) {
+    // do your database/api checks here etc
+    // then call the `passes` method where appropriate:
+    passes(); // if username is available
+    passes(false, 'Username has already been taken.');
+  });
+}
+```
+
 ### On the server (e.g. in Express)
 
 The validation can also be used isomorphically both in the browser in React components and on the server. This is done by creating the schema in the same way and then calling `validateServer` which returns a promise; the rejection of which can be handled by an error handler. Because the rejection returns an instance of `strategy.Error` it can be easily identified.
- 
+
 As an example in Express:
 
 ```javascript
 app.post('/contact', function (req, res, next) {
     var schema = strategy.createSchema(...);
-    
+
     strategy.validateServer(req.body, schema).then(function () {
         // Submit the data
     })
@@ -181,7 +201,7 @@ app.use(function (err, req, res, next) {
     }
 });
 ```
-    
+
 Using this method also activates all rules if `createInactiveSchema` was used.
 
 ## Testing
