@@ -155,10 +155,9 @@ Submitting the whole form (when `this.props.validate` is called) works the same 
 
 ### Registering Custom Validation Rules
 
-You can access the Validator to [register custom validations](https://github.com/skaterdav85/validatorjs#registering-custom-validation-rules)
-through validator.constructor.
+The Validator, accessible through the 3rd parameter of strategy.createSchema, enables [registering custom validations](https://github.com/skaterdav85/validatorjs#registering-custom-validation-rules).
 
-```
+```javascript
 this.validatorTypes = strategy.createInactiveSchema({
   username: 'required|usernameAvailable',
 }, {
