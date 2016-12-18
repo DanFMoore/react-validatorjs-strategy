@@ -5,7 +5,7 @@
     "Dan Moore"
   ],
   "dependencies": {
-    "validatorjs": "3.7.0"
+    "validatorjs": "3.9.0"
   },
   "license": "Unlicense",
   "keywords": [

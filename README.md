@@ -8,7 +8,7 @@ The strategy interface for `react-validation-mixin` is defined [here](https://ju
 
 ### Browser
 
-First follow the instructions to install [validatorjs](https://github.com/skaterdav85/validatorjs) (tested with version 2.0.5) and then download `dist/strategy.min.js` and include via a script tag:
+First follow the instructions to install [validatorjs](https://github.com/skaterdav85/validatorjs) (tested with version 3.9) and then download `dist/strategy.min.js` and include via a script tag:
 
 ```html
 <script src="dist/strategy.min.js" type="text/javascript"></script>
